@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -21,11 +22,16 @@ public class PlayerController : MonoBehaviour
     // Current Move Direction
     private Vector3 _moveDirection;
 
+    public int pickUpCount;
+
+    [SerializeField]
+    private TextMeshProUGUI pickupText;
+
     // Start is called before the first frame update
     void Start()
     {
         _pController = GetComponent<CharacterController>();
-    
+        pickUpCount = 0;
 
     }
 
@@ -54,4 +60,32 @@ public class PlayerController : MonoBehaviour
         _pController.Move(_moveDirection * Time.deltaTime);
 
     }
+
+    private void OnTriggerEnter(Collider other) // Is called when the player collides with a trigger collider 
+    {
+        /*swtich (other.gameObject.tag) 
+        {
+            case "Pickup":
+                other.gameObject.SetActive(false);
+                pickUpCount += 1;
+                break;
+
+            case "Enemy":
+                gameObject.SetActive(false);
+                Debug.Log("YOU DIED!"); 
+                break;
+
+        } */
+
+
+        if (other.gameObject.CompareTag("Pickup"))
+        {
+            other.gameObject.SetActive(false);
+            pickUpCount += 1;
+            Debug.Log("Score");
+            pickupText.text = pickUpCount.ToString();
+        }
+    } 
 }
+
+
