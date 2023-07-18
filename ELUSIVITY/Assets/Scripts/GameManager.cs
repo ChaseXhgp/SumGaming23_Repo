@@ -24,4 +24,8 @@ public class GameManager : MonoBehaviour
         timerText.text = currentTime.ToString("F0") + " / " + targetTime.ToString();
 
     }
+
+    public void GameOver(){
+        //This will reset the scene
+    }
 }
