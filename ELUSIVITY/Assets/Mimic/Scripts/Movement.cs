@@ -17,6 +17,11 @@ namespace MimicSpace
         [Range(0.5f, 5f)]
         public float height = 0.8f;
         public float speed = 5f;
+
+        public float minPatrolWaitTime;
+        public float maxPatrolWaitTime;
+
+        public List<Transform> patrolPoints;
         Vector3 velocity = Vector3.zero;
         public float velocityLerpCoef = 4f;
         Mimic myMimic;
@@ -32,7 +37,36 @@ namespace MimicSpace
         {
             myMimic = GetComponent<Mimic>();
             _agent = GetComponent<NavMeshAgent>();
+            StartCoroutine(Wandering());
         }
+
+        private IEnumerator Wandering()
+        {
+
+            while (true)
+            {
+
+                //generate a random index to patrol to
+                int patrolIndex = Random.Range(0, patrolPoints.Count);
+
+                //Patrol to the next point in our list:
+                _agent.SetDestination(patrolPoints[patrolIndex].position);
+
+                //Wait for enemy to reach patrol point
+                while (Vector3.Distance(transform.position, patrolPoints[patrolIndex].position) > 1) yield return null;
+
+                //wait x seconds
+                yield return new WaitForSeconds(Random.Range(minPatrolWaitTime, maxPatrolWaitTime));
+
+                //Increment Patrol Point
+                patrolIndex++;
+
+                //Generate new move speed
+
+                //Clamp audio to move speed
+            }
+        }
+
 
         void Update()
         {
