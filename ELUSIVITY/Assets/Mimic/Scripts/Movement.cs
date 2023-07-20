@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace MimicSpace
 {
+
     /// <summary>
     /// This is a very basic movement script, if you want to replace it
     /// Just don't forget to update the Mimic's velocity vector with a Vector3(x, 0, z)
@@ -33,6 +34,9 @@ namespace MimicSpace
         private NavMeshAgent _agent;
         public LayerMask detectableLayers; 
 
+        [SerializeField]
+        private int patrol;
+
         private void Start()
         {
             myMimic = GetComponent<Mimic>();
@@ -42,12 +46,15 @@ namespace MimicSpace
 
         private IEnumerator Wandering()
         {
-
+            Debug.Log("Wandering");
             while (true)
             {
 
+
                 //generate a random index to patrol to
                 int patrolIndex = Random.Range(0, patrolPoints.Count);
+
+                patrol = patrolIndex;
 
                 //Patrol to the next point in our list:
                 _agent.SetDestination(patrolPoints[patrolIndex].position);
@@ -57,10 +64,6 @@ namespace MimicSpace
 
                 //wait x seconds
                 yield return new WaitForSeconds(Random.Range(minPatrolWaitTime, maxPatrolWaitTime));
-
-                //Increment Patrol Point
-                patrolIndex++;
-
                 //Generate new move speed
 
                 //Clamp audio to move speed
@@ -70,7 +73,16 @@ namespace MimicSpace
 
         void Update()
         {
-            HandlePlayerDetection();
+
+            /* if (Physics.CheckSphere(transform.position, detectionRoadius, 1 << 6)) //Check if the player is in range or not
+             {
+                StopCoroutine(Wandering());
+                StartCoroutine(ChasePlayer());
+             } else
+             {
+                StopCoroutine(ChasePlayer());
+                StartCoroutine(Wandering());
+             } */
 
             //velocity = Vector3.Lerp(velocity, new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * speed, velocityLerpCoef * Time.deltaTime);
             velocity = Vector3.Lerp(velocity, _agent.velocity.normalized * speed, velocityLerpCoef * Time.deltaTime);
@@ -86,18 +98,22 @@ namespace MimicSpace
             transform.position = Vector3.Lerp(transform.position, destHeight, velocityLerpCoef * Time.deltaTime);
         }
 
-        private void HandlePlayerDetection()
+        private IEnumerator ChasePlayer()
         {
-            if (Physics.CheckSphere(transform.position, detectionRoadius, 1 << 6)) //Check if the player is in range or not
+            Debug.Log("Chasing");
+            while (true)
             {
                 _agent.SetDestination(playerTarget.transform.position);
 
-                if (Physics.CheckSphere(transform.position, killingRadius, 1 << 6)) //Check if the player is in killing range or not
-                {
+                 if (Physics.CheckSphere(transform.position, killingRadius, 1 << 6)) //Check if the player is in killing range or not
+                 {
                     print("Kill Player");
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                }
+                 }
+
+                 yield return null;
             }
+            
         }
 
         void OnDrawGizmosSelected()
