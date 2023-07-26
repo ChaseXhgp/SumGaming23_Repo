@@ -30,6 +30,10 @@ namespace MimicSpace
         [SerializeField] private int patrolIndex; // The current index of the partol point this is following READ ONLY
         public float minPatrolWaitTime;
         public float maxPatrolWaitTime;
+        ////////////
+        public float minPatrolSpeed = 5;
+        public float maxPatrolSpeed = 30;
+        public float chaseSpeed = 10;
         [Space(10), Header("Chase Settings"), Space(10)]
         public GameObject playerTarget; // The Player object which the monster chases
         public float detectionRoadius = 10;
@@ -48,6 +52,9 @@ namespace MimicSpace
             Debug.Log("Wandering");
             while (!PlayerInDetectionZone() && currentState == EnemyState.Patrolling)
             {
+                //change speed here
+                _agent.speed = Random.Range(minPatrolSpeed, maxPatrolSpeed);
+                //print(_agent.speed);
                 //generate a random index to patrol to
                 int patrol = Random.Range(0, patrolPoints.Count);
                 patrolIndex = patrol;
@@ -58,6 +65,7 @@ namespace MimicSpace
                     yield return null;
                 //wait for some time
                 yield return new WaitForSeconds(Random.Range(minPatrolWaitTime, maxPatrolWaitTime));
+
             }
             // If the player is detected or the state has changed, switch to chasing player
             currentState = EnemyState.ChasingPlayer;
@@ -92,6 +100,7 @@ namespace MimicSpace
         private IEnumerator ChasePlayer()
         {
             Debug.Log("Chasing");
+            _agent.speed = chaseSpeed;
             while (PlayerInDetectionZone() && currentState == EnemyState.ChasingPlayer)
             {
                 _agent.SetDestination(playerTarget.transform.position);
