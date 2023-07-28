@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     private float currentTime = 0;
     public TextMeshProUGUI timerText; // Have to assign in the Inspector
-    public int targetTime = 360; // The amount of seconds the player needs to suruvive to win
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +20,7 @@ public class GameManager : MonoBehaviour
         currentTime += 1 * Time.deltaTime; // Update the internal timer var
 
         // Update Timer Text to reflect to current time
-        timerText.text = currentTime.ToString("F0") + " / " + targetTime.ToString();
+        timerText.text = currentTime.ToString("F0");
 
     }
 

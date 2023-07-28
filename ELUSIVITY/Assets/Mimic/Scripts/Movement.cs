@@ -33,7 +33,14 @@ namespace MimicSpace
         ////////////
         public float minPatrolSpeed = 5;
         public float maxPatrolSpeed = 30;
-        public float chaseSpeed = 10;
+        ///////////
+        public float chaseSpeedMin = 6;
+        public float chaseSpeedMax = 12;
+        ////
+        [SerializeField] private AudioSource noticeSoundEffect;
+        [SerializeField] private AudioSource hummingLoop;
+        private bool canPlayNoticeSound = true;
+        ////
         [Space(10), Header("Chase Settings"), Space(10)]
         public GameObject playerTarget; // The Player object which the monster chases
         public float detectionRoadius = 10;
@@ -50,9 +57,12 @@ namespace MimicSpace
         private IEnumerator Wandering()
         {
             Debug.Log("Wandering");
+            hummingLoop.Play();
+            canPlayNoticeSound = true;
             while (!PlayerInDetectionZone() && currentState == EnemyState.Patrolling)
             {
                 //change speed here
+                //print("New Point");
                 _agent.speed = Random.Range(minPatrolSpeed, maxPatrolSpeed);
                 //print(_agent.speed);
                 //generate a random index to patrol to
@@ -100,7 +110,16 @@ namespace MimicSpace
         private IEnumerator ChasePlayer()
         {
             Debug.Log("Chasing");
-            _agent.speed = chaseSpeed;
+            _agent.speed = Random.Range(chaseSpeedMin, chaseSpeedMax);
+
+                // Checking if the private bool variable is true
+            if (canPlayNoticeSound)
+            {
+                // Do something when isActivated is true
+                canPlayNoticeSound = false;
+                noticeSoundEffect.Play();
+            }
+
             while (PlayerInDetectionZone() && currentState == EnemyState.ChasingPlayer)
             {
                 _agent.SetDestination(playerTarget.transform.position);
