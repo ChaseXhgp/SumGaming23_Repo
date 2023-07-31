@@ -39,6 +39,7 @@ namespace MimicSpace
         ////
         [SerializeField] private AudioSource noticeSoundEffect;
         [SerializeField] private AudioSource hummingLoop;
+        [SerializeField] private AudioSource chaseMusic;
         private bool canPlayNoticeSound = true;
         ////
         [Space(10), Header("Chase Settings"), Space(10)]
@@ -59,6 +60,7 @@ namespace MimicSpace
             Debug.Log("Wandering");
             hummingLoop.Play();
             canPlayNoticeSound = true;
+            chaseMusic.Stop();
             while (!PlayerInDetectionZone() && currentState == EnemyState.Patrolling)
             {
                 //change speed here
@@ -118,6 +120,8 @@ namespace MimicSpace
                 // Do something when isActivated is true
                 canPlayNoticeSound = false;
                 noticeSoundEffect.Play();
+                chaseMusic.Play();
+
             }
 
             while (PlayerInDetectionZone() && currentState == EnemyState.ChasingPlayer)
@@ -125,8 +129,9 @@ namespace MimicSpace
                 _agent.SetDestination(playerTarget.transform.position);
                 if (Physics.CheckSphere(transform.position, killingRadius, detectableLayers)) //Check if the player is in killing range or not
                 {
-                    print("Kill Player");
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    FindObjectOfType<GameManager>().EndGame();//Find GameManafer and reset the scene
+                    
                 }
                 yield return null;
             }
