@@ -76,4 +76,40 @@ public class FPSController : MonoBehaviour
 
         #endregion
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Pickup"))
+        {
+            CollectPickup(other.gameObject);
+
+            //Destroy the pickup
+            Destroy(other.gameObject);
+        }
+    }
+
+    private void CollectPickup(GameObject pickup)
+    {
+        Pickup ability = pickup.GetComponent<Pickup>();
+
+
+        //Check the pickup type
+        switch (ability.pickupAbility)
+        {
+            case PickupAbility.FreezeMonster:
+                //Add Buff
+                Debug.Log("Freeze Monster");
+                break;
+            case PickupAbility.BoostSpeed:
+                //Add Buff
+                Debug.Log("Boost Speed");
+                break;
+            case PickupAbility.BoostFlashlight:
+                Debug.Log("Boost Flashlight");
+                //Add Buff
+                break;
+            default: break;
+
+        }
+    }
 }
