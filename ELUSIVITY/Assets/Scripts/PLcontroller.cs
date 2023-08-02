@@ -95,8 +95,8 @@ public class FPSController : MonoBehaviour
     {
         // Code before the yield statement
         Debug.Log("Monster has been frozen.");
-          NavMeshAgent monsterNavAgent = Monster.GetComponent<NavMeshAgent>();
-          monsterNavAgent.speed = 0.0f;
+          UnityEngine.AI.NavMeshAgent monsterNavAgent = Monster.GetComponent<UnityEngine.AI.NavMeshAgent>();
+          monsterNavAgent.speed -= 500.0f; ///Fix This its a little weird, Wandering Stops.
         
 
         // Yield to wait for a number of seconds
@@ -104,6 +104,7 @@ public class FPSController : MonoBehaviour
 
         // Code after the yield statement
         Debug.Log("Powerup End");
+        monsterNavAgent.speed += 500.0f;
        
     }
 

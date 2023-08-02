@@ -7753,7 +7753,7 @@ MonoBehaviour:
   jumpPower: 0
   gravity: 10
   Flashlight_Light: {fileID: 460097360}
-  Monster: {fileID: 0}
+  Monster: {fileID: 1327176467}
   lookSpeed: 7
   lookXLimit: 45
   canMove: 1
