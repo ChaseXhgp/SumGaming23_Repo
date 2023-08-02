@@ -10,6 +10,8 @@ public class FPSController : MonoBehaviour
     public float runSpeed = 12f;
     public float jumpPower = 7f;
     public float gravity = 10f;
+    public Light Flashlight_Light;
+    public GameObject Monster;
 
 
     public float lookSpeed = 2f;
@@ -88,6 +90,57 @@ public class FPSController : MonoBehaviour
         }
     }
 
+     
+    IEnumerator FreezeMonsterRoutine()
+    {
+        // Code before the yield statement
+        Debug.Log("Monster has been frozen.");
+          NavMeshAgent monsterNavAgent = Monster.GetComponent<NavMeshAgent>();
+          monsterNavAgent.speed = 0.0f;
+        
+
+        // Yield to wait for a number of seconds
+        yield return new WaitForSeconds(7.0f);
+
+        // Code after the yield statement
+        Debug.Log("Powerup End");
+       
+    }
+
+    IEnumerator BoostSpeedRoutine()
+    {
+        // Code before the yield statement
+        Debug.Log("Speed has been boosted..");
+        walkSpeed +=5;
+        runSpeed +=10;
+
+
+        // Yield to wait for a number of seconds
+        yield return new WaitForSeconds(4.0f);
+
+        // Code after the yield statement
+        Debug.Log("Powerup End");
+        walkSpeed -=5;
+        runSpeed -=10;
+       
+    }
+
+    IEnumerator BoostFlashlightRoutine()
+    {
+        // Code before the yield statement
+        Debug.Log("Flashlight range has been boosted.");
+        Flashlight_Light.range += 40;
+
+
+        // Yield to wait for a number of seconds
+        yield return new WaitForSeconds(5.0f);
+
+        // Code after the yield statement
+        Debug.Log("Powerup End");
+        Flashlight_Light.range -= 40;
+       
+    }
+    
     private void CollectPickup(GameObject pickup)
     {
         Pickup ability = pickup.GetComponent<Pickup>();
@@ -99,13 +152,17 @@ public class FPSController : MonoBehaviour
             case PickupAbility.FreezeMonster:
                 //Add Buff
                 Debug.Log("Freeze Monster");
+                StartCoroutine(FreezeMonsterRoutine());
+                
                 break;
             case PickupAbility.BoostSpeed:
                 //Add Buff
                 Debug.Log("Boost Speed");
+                StartCoroutine(BoostSpeedRoutine());
                 break;
             case PickupAbility.BoostFlashlight:
                 Debug.Log("Boost Flashlight");
+                StartCoroutine(BoostFlashlightRoutine());
                 //Add Buff
                 break;
             default: break;
