@@ -14069,7 +14069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 313701049917589189, guid: 6686b6ddd37d6456a97998e5b1a32e4a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5118905202804820299, guid: 6686b6ddd37d6456a97998e5b1a32e4a, type: 3}
       propertyPath: m_RootOrder
@@ -14077,7 +14077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118905202804820299, guid: 6686b6ddd37d6456a97998e5b1a32e4a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 43.3
+      value: 41.97
       objectReference: {fileID: 0}
     - target: {fileID: 5118905202804820299, guid: 6686b6ddd37d6456a97998e5b1a32e4a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -14085,7 +14085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118905202804820299, guid: 6686b6ddd37d6456a97998e5b1a32e4a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 124.28
+      value: 117.64
       objectReference: {fileID: 0}
     - target: {fileID: 5118905202804820299, guid: 6686b6ddd37d6456a97998e5b1a32e4a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -25171,6 +25171,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 608258904, guid: 3fc537e92bf3d2449b5be72cfd6cb447, type: 3}
+      propertyPath: canMove
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 608258904, guid: 3fc537e92bf3d2449b5be72cfd6cb447, type: 3}
       propertyPath: chaseMusic
       value: 
       objectReference: {fileID: 1327176477}
@@ -25324,11 +25328,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8675915457954794083, guid: 3fc537e92bf3d2449b5be72cfd6cb447, type: 3}
       propertyPath: velocity.x
-      value: 0.6337707
+      value: 0.39716032
       objectReference: {fileID: 0}
     - target: {fileID: 8675915457954794083, guid: 3fc537e92bf3d2449b5be72cfd6cb447, type: 3}
       propertyPath: velocity.z
-      value: -0.16853036
+      value: 0.20210122
       objectReference: {fileID: 0}
     - target: {fileID: 8675915457954794083, guid: 3fc537e92bf3d2449b5be72cfd6cb447, type: 3}
       propertyPath: maxGrowCoef

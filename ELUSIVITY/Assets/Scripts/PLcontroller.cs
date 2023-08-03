@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MimicSpace;
 
 [RequireComponent(typeof(CharacterController))]
 public class FPSController : MonoBehaviour
@@ -96,11 +97,11 @@ public class FPSController : MonoBehaviour
     IEnumerator FreezeMonsterRoutine()
     {
 
-        //Movement mimicMovement = Monster.GetComponent<Movement>();
+        
 
         // Code before the yield statement
         Debug.Log("Monster has been frozen.");
-        
+        Monster.GetComponent<Movement>().canMove = false;
         
           
         
@@ -110,6 +111,7 @@ public class FPSController : MonoBehaviour
 
         // Code after the yield statement
         Debug.Log("Powerup End");
+        Monster.GetComponent<Movement>().canMove = true;
         
         
        
