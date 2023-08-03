@@ -10,12 +10,16 @@ namespace MimicSpace
         Patrolling,
         ChasingPlayer
     }
+
+    
     /// <summary>
     /// This is a very basic movement script, if you want to replace it
     /// Just don't forget to update the Mimic's velocity vector with a Vector3(x, 0, z)
     /// </summary>
     public class Movement : MonoBehaviour
     {
+        public bool canMove = true;
+
         [Header("Mimic Settings"), Space(10)]
         public EnemyState currentState;
         [Tooltip("Body Height from ground")]
@@ -48,6 +52,7 @@ namespace MimicSpace
         public float killingRadius = 5;
         private NavMeshAgent _agent;
         public LayerMask detectableLayers;
+
         private void Start()
         {
             currentState = EnemyState.Patrolling;
@@ -57,6 +62,10 @@ namespace MimicSpace
         }
         private IEnumerator Wandering()
         {
+            if (canMove)
+            {
+                
+            }
             Debug.Log("Wandering");
             hummingLoop.Play();
             canPlayNoticeSound = true;
@@ -131,7 +140,7 @@ namespace MimicSpace
                 {
                     //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                     FindObjectOfType<GameManager>().EndGame();//Find GameManafer and reset the scene
-                    
+
                 }
                 yield return null;
             }
