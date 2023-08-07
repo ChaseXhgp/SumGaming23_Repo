@@ -14,11 +14,10 @@ public class Pickup : MonoBehaviour
 {
 
     public PickupAbility pickupAbility; //The type of pickup this is
-    public int BuffDuration; //Determines how long the pickup will last
 
     private void OnDestroy()
     {
         //When the pickup is collected
-        
+
     }
 }
